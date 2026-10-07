@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { verifyPassword, signAdminToken, ADMIN_COOKIE_NAME } from '@/lib/auth';
+import { ensureDatabaseSeeded } from '@/lib/ensureSeed';
 import { z } from 'zod';
 
 // In-memory rate limiter for brute-force protection
@@ -44,6 +45,9 @@ export async function POST(request: Request) {
 
     const { email, password } = parseResult.data;
 
+    // Ensure database and admin account exist
+    await ensureDatabaseSeeded();
+
     // 3. Find Admin in DB
     const admin = await prisma.adminUser.findUnique({
       where: { email: email.toLowerCase().trim() },
@@ -70,15 +74,19 @@ export async function POST(request: Request) {
     if (!isValid) {
       recordFailedAttempt(ip);
 
-      // Increment DB failed attempts
-      const failedCount = admin.failedLoginAttempts + 1;
-      await prisma.adminUser.update({
-        where: { id: admin.id },
-        data: {
-          failedLoginAttempts: failedCount,
-          lockedUntil: failedCount >= 5 ? new Date(Date.now() + 15 * 60 * 1000) : null,
-        },
-      });
+      // Increment DB failed attempts safely
+      try {
+        const failedCount = admin.failedLoginAttempts + 1;
+        await prisma.adminUser.update({
+          where: { id: admin.id },
+          data: {
+            failedLoginAttempts: failedCount,
+            lockedUntil: failedCount >= 5 ? new Date(Date.now() + 15 * 60 * 1000) : null,
+          },
+        });
+      } catch (e) {
+        console.warn('Could not record failed login in DB:', e);
+      }
 
       return NextResponse.json(
         { error: 'Invalid email or password credentials' },
@@ -86,16 +94,20 @@ export async function POST(request: Request) {
       );
     }
 
-    // Reset rate limiter and failed attempts on success
+    // Reset rate limiter and update login time safely
     rateLimitMap.delete(ip);
-    await prisma.adminUser.update({
-      where: { id: admin.id },
-      data: {
-        failedLoginAttempts: 0,
-        lockedUntil: null,
-        lastLoginAt: new Date(),
-      },
-    });
+    try {
+      await prisma.adminUser.update({
+        where: { id: admin.id },
+        data: {
+          failedLoginAttempts: 0,
+          lockedUntil: null,
+          lastLoginAt: new Date(),
+        },
+      });
+    } catch (e) {
+      console.warn('Could not update lastLoginAt in DB:', e);
+    }
 
     // 5. Sign JWT session token
     const token = await signAdminToken({
@@ -127,10 +139,10 @@ export async function POST(request: Request) {
     });
 
     return response;
-  } catch (error) {
+  } catch (error: any) {
     console.error('Admin login error:', error);
     return NextResponse.json(
-      { error: 'Internal server error processing authentication' },
+      { error: error?.message || 'Internal server error processing authentication' },
       { status: 500 }
     );
   }
