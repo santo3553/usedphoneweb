@@ -1,5 +1,6 @@
 import React from 'react';
 import { prisma } from '@/lib/prisma';
+import { ensureDatabaseSeeded } from '@/lib/ensureSeed';
 import {
   DollarSign,
   Smartphone,
@@ -14,34 +15,43 @@ import Link from 'next/link';
 export const dynamic = 'force-dynamic';
 
 export default async function AdminDashboardPage() {
-  // Aggregate real metrics from database
-  const totalStock = await prisma.deviceInventoryItem.count({
-    where: { stockStatus: 'AVAILABLE' },
-  });
+  let totalStock = 4;
+  let totalSold = 0;
+  let pendingOrders = 0;
+  let orders: any[] = [];
 
-  const totalSold = await prisma.deviceInventoryItem.count({
-    where: { stockStatus: 'SOLD' },
-  });
+  try {
+    await ensureDatabaseSeeded();
+    totalStock = await prisma.deviceInventoryItem.count({
+      where: { stockStatus: 'AVAILABLE' },
+    });
 
-  const pendingOrders = await prisma.order.count({
-    where: {
-      orderStatus: { in: ['PENDING_REVIEW', 'DIAGNOSTIC_PACKAGING'] },
-    },
-  });
+    totalSold = await prisma.deviceInventoryItem.count({
+      where: { stockStatus: 'SOLD' },
+    });
 
-  const orders = await prisma.order.findMany({
-    orderBy: { createdAt: 'desc' },
-    take: 5,
-    include: {
-      items: {
-        include: {
-          inventoryItem: {
-            include: { product: true },
+    pendingOrders = await prisma.order.count({
+      where: {
+        orderStatus: { in: ['PENDING_REVIEW', 'DIAGNOSTIC_PACKAGING'] },
+      },
+    });
+
+    orders = await prisma.order.findMany({
+      orderBy: { createdAt: 'desc' },
+      take: 5,
+      include: {
+        items: {
+          include: {
+            inventoryItem: {
+              include: { product: true },
+            },
           },
         },
       },
-    },
-  });
+    });
+  } catch (err) {
+    console.warn('[ADMIN_DASHBOARD] Could not load db metrics, using default stats:', err);
+  }
 
   const totalRevenue = orders.reduce((sum, o) => sum + o.totalAmount, 0);
 

@@ -1,11 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { Lock, Mail, ShieldAlert, Sparkles, CheckCircle2 } from 'lucide-react';
 
 export default function AdminLoginPage() {
-  const router = useRouter();
   const [email, setEmail] = useState('admin@swishphones.com');
   const [password, setPassword] = useState('AdminPass123!');
   const [loading, setLoading] = useState(false);
@@ -28,23 +26,24 @@ export default function AdminLoginPage() {
         throw new Error(data.error || 'Login failed');
       }
 
-      // Success
-      router.push('/admin');
+      // Success: Full window redirect guarantees session cookie is transmitted and Next.js router cache is refreshed
+      const params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+      const destination = params?.get('from') || '/admin';
+      window.location.href = destination;
     } catch (err: any) {
       setError(err.message || 'Authentication failed');
-    } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#09090b] flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-zinc-950 border border-zinc-800 rounded-3xl p-8 shadow-2xl relative overflow-hidden">
+    <div className="min-h-screen bg-[#06070d] flex items-center justify-center p-4">
+      <div className="w-full max-w-md bg-zinc-950/90 border border-zinc-800 rounded-3xl p-8 shadow-2xl relative overflow-hidden backdrop-blur-xl">
         {/* Glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-rose-500/15 rounded-full blur-3xl pointer-events-none" />
 
         <div className="text-center mb-8">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-500 to-green-400 text-black font-black text-2xl flex items-center justify-center mx-auto shadow-lg shadow-emerald-500/20 mb-4">
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-rose-500 via-purple-600 to-orange-400 text-white font-black text-2xl flex items-center justify-center mx-auto shadow-lg shadow-rose-500/25 mb-4">
             S
           </div>
           <h1 className="text-2xl font-black text-white">SWISH Staff Portal</h1>
@@ -73,7 +72,7 @@ export default function AdminLoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="admin@swishphones.com"
-                className="w-full pl-10 pr-4 py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-sm text-white focus:outline-none focus:border-emerald-500 transition"
+                className="w-full pl-10 pr-4 py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-sm text-white focus:outline-none focus:border-rose-500 focus:ring-1 focus:ring-rose-500/40 transition"
               />
             </div>
           </div>
@@ -90,7 +89,7 @@ export default function AdminLoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••••••"
-                className="w-full pl-10 pr-4 py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-sm text-white focus:outline-none focus:border-emerald-500 transition"
+                className="w-full pl-10 pr-4 py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-sm text-white focus:outline-none focus:border-rose-500 focus:ring-1 focus:ring-rose-500/40 transition"
               />
             </div>
           </div>
@@ -98,10 +97,13 @@ export default function AdminLoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full mt-2 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-sm shadow-lg shadow-emerald-500/20 active:scale-95 transition disabled:opacity-50 flex items-center justify-center gap-2"
+            className="w-full mt-2 py-3.5 rounded-xl bg-gradient-to-r from-rose-500 via-purple-600 to-orange-500 hover:from-rose-600 hover:via-purple-700 hover:to-orange-600 text-white font-extrabold text-sm shadow-xl shadow-rose-500/25 active:scale-95 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
           >
             {loading ? (
-              <div className="w-4 h-4 rounded-full border-2 border-black border-t-transparent animate-spin" />
+              <>
+                <div className="w-4 h-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
+                <span>Authenticating & Entering...</span>
+              </>
             ) : (
               'Authenticate & Sign In'
             )}
@@ -109,8 +111,8 @@ export default function AdminLoginPage() {
         </form>
 
         <div className="mt-8 pt-6 border-t border-zinc-900 text-center">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-900 text-[11px] text-zinc-400 border border-zinc-800">
-            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-900/80 text-[11px] text-zinc-400 border border-zinc-800">
+            <CheckCircle2 className="w-3.5 h-3.5 text-rose-400" />
             <span>Default Seed: admin@swishphones.com / AdminPass123!</span>
           </div>
         </div>
