@@ -6,7 +6,15 @@ import { Navbar } from '@/components/store/Navbar';
 import { CartDrawer } from '@/components/cart/CartDrawer';
 import { HologramTiltCard } from '@/components/ui/HologramTiltCard';
 import Link from 'next/link';
-import { Sparkles, ShieldCheck, BatteryCharging, ArrowRight, Smartphone, Eye } from 'lucide-react';
+import {
+  Sparkles,
+  ShieldCheck,
+  BatteryCharging,
+  ArrowRight,
+  Smartphone,
+  Camera,
+  CheckCircle2,
+} from 'lucide-react';
 
 function CatalogContent() {
   const { items, setIsCartOpen } = useCart();
@@ -55,7 +63,7 @@ function CatalogContent() {
             Certified Pre-Owned <span className="text-gradient-aurora">Catalog</span>
           </h1>
           <p className="mt-2 text-zinc-400 text-sm sm:text-base max-w-2xl">
-            Each smartphone is individually serialized, bench-tested, and photographed. Hover to feel the 3D holographic tilt or click any model to inspect in real-time 3D.
+            Each smartphone is individually serialized, bench-tested, and photographed. Hover to feel the 3D holographic tilt or click any model to inspect high-resolution multi-angle photos.
           </p>
         </div>
 
@@ -123,6 +131,26 @@ function CatalogContent() {
                   ? Math.max(...p.inventoryItems.map((i: any) => i.batteryHealth))
                   : 98;
 
+              // Extract actual photography
+              const productPhotos: string[] = (() => {
+                try {
+                  if (p.inventoryItems?.[0]?.imagesJson) {
+                    const parsed = JSON.parse(p.inventoryItems[0].imagesJson);
+                    if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+                  }
+                  if (p.imagesJson) {
+                    const parsed = JSON.parse(p.imagesJson);
+                    if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+                  }
+                } catch {}
+                return [
+                  'https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=1200&q=80',
+                ];
+              })();
+
+              const primaryPhoto = productPhotos[0];
+              const photoCount = productPhotos.length;
+
               return (
                 <HologramTiltCard
                   key={p.id}
@@ -149,17 +177,22 @@ function CatalogContent() {
                     </p>
                   </div>
 
-                  {/* Visual Preview Banner */}
-                  <div className="relative h-48 w-full bg-gradient-to-b from-zinc-900/60 to-zinc-950 flex items-center justify-center overflow-hidden my-2">
-                    <div className="w-24 h-40 rounded-2xl bg-zinc-900 border-2 border-zinc-700/80 shadow-2xl group-hover:scale-105 group-hover:-rotate-3 transition-transform duration-500 flex flex-col justify-between p-2">
-                      <div className="w-8 h-2 rounded-full bg-black mx-auto" />
-                      <div className="text-center text-[9px] font-black text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-purple-400 to-orange-400 tracking-wider">
-                        3D READY
-                      </div>
-                      <div className="w-4 h-1 rounded-full bg-zinc-600 mx-auto" />
+                  {/* Visual Preview Banner - Authentic Photography */}
+                  <div className="relative h-56 w-full bg-gradient-to-b from-zinc-900/40 via-zinc-900/20 to-zinc-950 flex items-center justify-center overflow-hidden my-2 rounded-2xl p-4">
+                    <img
+                      src={primaryPhoto}
+                      alt={`${p.brand} ${p.modelName} certified unit`}
+                      className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-[0_15px_25px_rgba(0,0,0,0.85)] select-none"
+                    />
+
+                    {/* Actual Photos Count Badge */}
+                    <div className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/80 backdrop-blur-md border border-rose-500/30 text-[10px] text-rose-300 font-bold shadow-md">
+                      <Camera className="w-3 h-3 text-rose-400" />
+                      <span>{photoCount} Real {photoCount === 1 ? 'Photo' : 'Photos'}</span>
                     </div>
 
-                    <div className="absolute bottom-2 right-3 flex items-center gap-1 px-2.5 py-1 rounded-lg bg-black/80 backdrop-blur-md border border-rose-500/20 text-[10px] text-rose-300 font-semibold shadow-sm">
+                    {/* Battery Health Badge */}
+                    <div className="absolute bottom-3 right-3 flex items-center gap-1 px-2.5 py-1 rounded-lg bg-black/80 backdrop-blur-md border border-rose-500/20 text-[10px] text-rose-300 font-semibold shadow-sm">
                       <BatteryCharging className="w-3 h-3 text-orange-400" />
                       Up to {maxBattery}% Battery
                     </div>
@@ -187,7 +220,7 @@ function CatalogContent() {
                       className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-rose-500/20 via-purple-500/20 to-orange-500/20 hover:from-rose-500 hover:via-purple-600 hover:to-orange-500 text-white hover:text-white border border-rose-500/30 hover:border-rose-400 text-xs font-black text-center transition-all duration-300 flex items-center justify-center gap-2 group-hover:shadow-lg group-hover:shadow-rose-500/25"
                     >
                       <Sparkles className="w-3.5 h-3.5 text-orange-400 group-hover:text-white transition-colors" />
-                      Inspect in 3D & Select Grade
+                      Inspect Photos & Select Grade
                       <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
                   </div>

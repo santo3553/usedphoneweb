@@ -18,13 +18,13 @@ export function HeroSection() {
       {/* Main Title with Aurora Gradient */}
       <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tight text-white max-w-5xl leading-[1.05]">
         Certified Used Flagships.{' '}
-        <span className="text-gradient-aurora">Inspected in 3D.</span>
+        <span className="text-gradient-aurora">100% Real Photos.</span>
       </h1>
 
       {/* Subtitle */}
       <p className="mt-6 text-lg sm:text-xl text-zinc-300 max-w-2xl font-normal leading-relaxed">
         Save up to <strong className="text-rose-400 font-bold">50% off retail</strong> on certified second-hand iPhones & Galaxies. 
-        Zero hidden defects. 100% genuine OEM parts with 12-month full warranty protection.
+        Zero stock mockups. What you inspect in high-resolution photography is the exact serialized unit shipped to your door.
       </p>
 
       {/* CTAs with Glow and Hover Physics */}

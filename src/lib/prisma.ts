@@ -48,6 +48,16 @@ function resolveDatabaseUrl(): string {
   }
 
   // Default local development
+  const localCandidates = [
+    path.resolve(process.cwd(), 'prisma', 'dev.db'),
+    path.resolve(process.cwd(), 'swish-phones', 'prisma', 'dev.db'),
+    path.resolve(__dirname, '..', '..', 'prisma', 'dev.db'),
+  ];
+  for (const c of localCandidates) {
+    if (fs.existsSync(c)) {
+      return `file:${c}`;
+    }
+  }
   return `file:${path.resolve(process.cwd(), 'prisma', 'dev.db')}`;
 }
 
