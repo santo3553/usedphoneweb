@@ -37,13 +37,16 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#06070d] flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-zinc-950/90 border border-zinc-800 rounded-3xl p-8 shadow-2xl relative overflow-hidden backdrop-blur-xl">
-        {/* Glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-rose-500/15 rounded-full blur-3xl pointer-events-none" />
+    <div className="min-h-screen bg-black text-white flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Micro-grain noise overlay */}
+      <div className="grain" aria-hidden="true" />
 
+      {/* Ambient Radial Scrim */}
+      <div className="hero-photo" aria-hidden="true" />
+
+      <div className="w-full max-w-md bg-zinc-950/80 border border-white/10 rounded-3xl p-8 shadow-2xl relative overflow-hidden backdrop-blur-xl z-10">
         <div className="text-center mb-8">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-rose-500 via-purple-600 to-orange-400 text-white font-black text-2xl flex items-center justify-center mx-auto shadow-lg shadow-rose-500/25 mb-4">
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-white via-zinc-200 to-zinc-400 text-black font-black text-2xl flex items-center justify-center mx-auto shadow-lg mb-4">
             S
           </div>
           <h1 className="text-2xl font-black text-white">SWISH Staff Portal</h1>
@@ -72,7 +75,7 @@ export default function AdminLoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="admin@swishphones.com"
-                className="w-full pl-10 pr-4 py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-sm text-white focus:outline-none focus:border-rose-500 focus:ring-1 focus:ring-rose-500/40 transition"
+                className="w-full pl-10 pr-4 py-3 rounded-xl bg-zinc-900 border border-white/10 text-sm text-white focus:outline-none focus:border-white/40 transition"
               />
             </div>
           </div>
@@ -89,7 +92,7 @@ export default function AdminLoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••••••"
-                className="w-full pl-10 pr-4 py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-sm text-white focus:outline-none focus:border-rose-500 focus:ring-1 focus:ring-rose-500/40 transition"
+                className="w-full pl-10 pr-4 py-3 rounded-xl bg-zinc-900 border border-white/10 text-sm text-white focus:outline-none focus:border-white/40 transition"
               />
             </div>
           </div>
@@ -97,11 +100,11 @@ export default function AdminLoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full mt-2 py-3.5 rounded-xl bg-gradient-to-r from-rose-500 via-purple-600 to-orange-500 hover:from-rose-600 hover:via-purple-700 hover:to-orange-600 text-white font-extrabold text-sm shadow-xl shadow-rose-500/25 active:scale-95 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+            className="btn btn-solid w-full mt-2 py-3.5 text-sm font-bold flex items-center justify-center gap-2"
           >
             {loading ? (
               <>
-                <div className="w-4 h-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
+                <div className="w-4 h-4 rounded-full border-2 border-black border-t-transparent animate-spin" />
                 <span>Authenticating & Entering...</span>
               </>
             ) : (
@@ -110,9 +113,9 @@ export default function AdminLoginPage() {
           </button>
         </form>
 
-        <div className="mt-8 pt-6 border-t border-zinc-900 text-center">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-900/80 text-[11px] text-zinc-400 border border-zinc-800">
-            <CheckCircle2 className="w-3.5 h-3.5 text-rose-400" />
+        <div className="mt-8 pt-6 border-t border-white/10 text-center">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-900/80 text-[11px] text-zinc-400 border border-white/10">
+            <CheckCircle2 className="w-3.5 h-3.5 text-zinc-300" />
             <span>Default Seed: admin@swishphones.com / AdminPass123!</span>
           </div>
         </div>

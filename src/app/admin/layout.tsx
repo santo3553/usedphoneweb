@@ -37,22 +37,22 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   ];
 
   return (
-    <div className="min-h-screen bg-[#09090b] text-[#f4f4f5] flex flex-col md:flex-row">
+    <div className="min-h-screen bg-black text-white flex flex-col md:flex-row">
       {/* Sidebar */}
-      <aside className="w-full md:w-64 bg-zinc-950 border-b md:border-b-0 md:border-r border-zinc-800 flex flex-col justify-between shrink-0">
+      <aside className="w-full md:w-64 bg-zinc-950 border-b md:border-b-0 md:border-r border-white/10 flex flex-col justify-between shrink-0">
         <div>
           {/* Brand */}
-          <div className="p-6 border-b border-zinc-800/80 flex items-center justify-between">
+          <div className="p-6 border-b border-white/10 flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-xl bg-emerald-500 text-black font-black flex items-center justify-center text-lg">
+              <div className="w-8 h-8 rounded-xl bg-white text-black font-black flex items-center justify-center text-lg">
                 S
               </div>
               <div>
                 <span className="font-extrabold text-sm text-white block">SWISH Admin</span>
-                <span className="text-[10px] text-emerald-400 font-medium">Ops Control</span>
+                <span className="text-[10px] text-zinc-400 font-medium">Ops Control</span>
               </div>
             </div>
-            <span className="text-[10px] bg-zinc-800 text-zinc-300 px-2 py-0.5 rounded-full border border-zinc-700">
+            <span className="text-[10px] bg-zinc-800 text-zinc-300 px-2 py-0.5 rounded-full border border-white/10">
               v1.0
             </span>
           </div>
@@ -68,7 +68,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   href={item.href}
                   className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition ${
                     isActive
-                      ? 'bg-emerald-500 text-black shadow-lg shadow-emerald-500/10'
+                      ? 'bg-white text-black shadow-lg'
                       : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
                   }`}
                 >
@@ -81,7 +81,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </div>
 
         {/* Bottom Actions */}
-        <div className="p-4 border-t border-zinc-800/80 flex flex-col gap-2">
+        <div className="p-4 border-t border-white/10 flex flex-col gap-2">
           <Link
             href="/"
             target="_blank"

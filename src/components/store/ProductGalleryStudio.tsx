@@ -84,12 +84,12 @@ export function ProductGalleryStudio({
       {/* Studio Stage Header */}
       <div className="flex items-center justify-between gap-2 px-1">
         <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/30 text-[11px] font-bold text-rose-300 uppercase tracking-wider shadow-sm">
-            <Camera className="w-3.5 h-3.5 text-rose-400" />
+          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/15 text-[11px] font-bold text-zinc-300 uppercase tracking-wider shadow-sm">
+            <Camera className="w-3.5 h-3.5 text-zinc-300" />
             <span>Actual Device Photos</span>
           </div>
           {imeiOrSerial && (
-            <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-mono text-zinc-400 bg-zinc-900/80 px-2.5 py-1 rounded-full border border-zinc-800">
+            <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-mono text-zinc-400 bg-zinc-900/80 px-2.5 py-1 rounded-full border border-white/10">
               IMEI: {imeiOrSerial}
             </span>
           )}
@@ -101,8 +101,8 @@ export function ProductGalleryStudio({
           >
             {conditionGrade}
           </span>
-          <span className="inline-flex items-center gap-1 text-[11px] text-zinc-400 bg-zinc-900/80 px-2.5 py-1 rounded-full border border-zinc-800">
-            <BatteryCharging className="w-3.5 h-3.5 text-orange-400" />
+          <span className="inline-flex items-center gap-1 text-[11px] text-zinc-400 bg-zinc-900/80 px-2.5 py-1 rounded-full border border-white/10">
+            <BatteryCharging className="w-3.5 h-3.5 text-zinc-300" />
             {batteryHealth}% Health
           </span>
         </div>
@@ -111,10 +111,10 @@ export function ProductGalleryStudio({
       {/* Main Image Stage */}
       <div
         onClick={() => setIsLightboxOpen(true)}
-        className="group relative w-full h-[400px] sm:h-[480px] lg:h-[520px] rounded-3xl bg-gradient-to-b from-zinc-900/60 to-zinc-950 border border-zinc-800/80 hover:border-rose-500/40 transition-all duration-300 flex items-center justify-center overflow-hidden cursor-zoom-in shadow-2xl backdrop-blur-xl"
+        className="group relative w-full h-[400px] sm:h-[480px] lg:h-[520px] rounded-3xl bg-zinc-950/80 border border-white/10 hover:border-white/30 transition-all duration-300 flex items-center justify-center overflow-hidden cursor-zoom-in shadow-2xl backdrop-blur-xl"
       >
         {/* Subtle Ambient Radial Glow */}
-        <div className="absolute inset-0 bg-radial-at-c from-rose-500/5 via-transparent to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-radial-at-c from-white/5 via-transparent to-transparent pointer-events-none" />
 
         {/* The Current Photo */}
         <img
@@ -130,7 +130,7 @@ export function ProductGalleryStudio({
               type="button"
               onClick={handlePrev}
               aria-label="Previous photo"
-              className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 hover:bg-black/90 border border-zinc-700/60 hover:border-rose-400 text-white flex items-center justify-center opacity-80 sm:opacity-0 group-hover:opacity-100 transition-all duration-200 backdrop-blur-md shadow-lg"
+              className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 hover:bg-black/90 border border-white/15 hover:border-white text-white flex items-center justify-center opacity-80 sm:opacity-0 group-hover:opacity-100 transition-all duration-200 backdrop-blur-md shadow-lg"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
@@ -138,7 +138,7 @@ export function ProductGalleryStudio({
               type="button"
               onClick={handleNext}
               aria-label="Next photo"
-              className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 hover:bg-black/90 border border-zinc-700/60 hover:border-rose-400 text-white flex items-center justify-center opacity-80 sm:opacity-0 group-hover:opacity-100 transition-all duration-200 backdrop-blur-md shadow-lg"
+              className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 hover:bg-black/90 border border-white/15 hover:border-white text-white flex items-center justify-center opacity-80 sm:opacity-0 group-hover:opacity-100 transition-all duration-200 backdrop-blur-md shadow-lg"
             >
               <ChevronRight className="w-5 h-5" />
             </button>
@@ -147,14 +147,14 @@ export function ProductGalleryStudio({
 
         {/* Bottom Stage Overlay Pills */}
         <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between pointer-events-none">
-          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-zinc-800 text-zinc-300 text-xs shadow-lg font-medium">
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-white/15 text-zinc-300 text-xs shadow-lg font-medium">
             <span>
               Photo {activeIndex + 1} of {photoList.length}
             </span>
           </div>
 
-          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/75 hover:bg-black/95 backdrop-blur-md border border-zinc-800 group-hover:border-rose-500/50 text-zinc-300 group-hover:text-white text-xs shadow-lg transition-colors pointer-events-auto">
-            <Maximize2 className="w-3.5 h-3.5 text-rose-400" />
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/75 hover:bg-black/95 backdrop-blur-md border border-white/15 group-hover:border-white/40 text-zinc-300 group-hover:text-white text-xs shadow-lg transition-colors pointer-events-auto">
+            <Maximize2 className="w-3.5 h-3.5 text-zinc-300" />
             <span className="hidden sm:inline">Click to Zoom Lightbox</span>
           </div>
         </div>
@@ -172,8 +172,8 @@ export function ProductGalleryStudio({
                 onClick={() => setActiveIndex(idx)}
                 className={`relative shrink-0 w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-zinc-900 border overflow-hidden transition-all duration-200 flex items-center justify-center p-1.5 ${
                   isActive
-                    ? 'border-rose-500 ring-2 ring-rose-500/40 shadow-lg shadow-rose-500/20 scale-105'
-                    : 'border-zinc-800/80 hover:border-zinc-600 opacity-70 hover:opacity-100'
+                    ? 'border-white ring-2 ring-white/30 shadow-lg scale-105'
+                    : 'border-white/10 hover:border-white/30 opacity-70 hover:opacity-100'
                 }`}
               >
                 <img
@@ -208,7 +208,7 @@ export function ProductGalleryStudio({
                 {brand} {productName}
               </span>
               <span className="text-zinc-500 text-xs">|</span>
-              <span className="text-xs text-rose-400 font-mono">
+              <span className="text-xs text-zinc-400 font-mono">
                 Actual Serialized Photography ({activeIndex + 1}/{photoList.length})
               </span>
             </div>
@@ -216,7 +216,7 @@ export function ProductGalleryStudio({
             <button
               type="button"
               onClick={() => setIsLightboxOpen(false)}
-              className="p-2.5 rounded-full bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-300 hover:text-white transition"
+              className="p-2.5 rounded-full bg-zinc-900 hover:bg-zinc-800 border border-white/10 text-zinc-300 hover:text-white transition"
             >
               <X className="w-5 h-5" />
             </button>
@@ -239,14 +239,14 @@ export function ProductGalleryStudio({
                 <button
                   type="button"
                   onClick={handlePrev}
-                  className="absolute left-2 sm:-left-12 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-zinc-900/90 hover:bg-rose-600 border border-zinc-700 text-white flex items-center justify-center transition shadow-xl"
+                  className="absolute left-2 sm:-left-12 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-zinc-900/90 hover:bg-white hover:text-black border border-white/20 text-white flex items-center justify-center transition shadow-xl"
                 >
                   <ChevronLeft className="w-6 h-6" />
                 </button>
                 <button
                   type="button"
                   onClick={handleNext}
-                  className="absolute right-2 sm:-right-12 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-zinc-900/90 hover:bg-rose-600 border border-zinc-700 text-white flex items-center justify-center transition shadow-xl"
+                  className="absolute right-2 sm:-right-12 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-zinc-900/90 hover:bg-white hover:text-black border border-white/20 text-white flex items-center justify-center transition shadow-xl"
                 >
                   <ChevronRight className="w-6 h-6" />
                 </button>
@@ -266,8 +266,8 @@ export function ProductGalleryStudio({
                 onClick={() => setActiveIndex(idx)}
                 className={`w-14 h-14 rounded-xl border overflow-hidden p-1 bg-zinc-900 transition ${
                   idx === activeIndex
-                    ? 'border-rose-500 ring-2 ring-rose-500/50'
-                    : 'border-zinc-800 opacity-60 hover:opacity-100'
+                    ? 'border-white ring-2 ring-white/40'
+                    : 'border-white/10 opacity-60 hover:opacity-100'
                 }`}
               >
                 <img src={img} alt={`Thumb ${idx + 1}`} className="w-full h-full object-contain" />

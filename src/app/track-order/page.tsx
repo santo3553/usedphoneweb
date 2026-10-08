@@ -85,57 +85,64 @@ function TrackOrderInner() {
   const currentStageIdx = order ? getStageIndex(order.orderStatus) : 0;
 
   return (
-    <div className="min-h-screen bg-[#09090b] text-[#f4f4f5]">
-      <Navbar />
+    <div className="min-h-screen bg-black text-white relative overflow-hidden">
+      {/* Micro-grain noise overlay */}
+      <div className="grain" aria-hidden="true" />
 
-      <main className="pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-        <div className="text-center mb-8">
-          <span className="text-xs font-bold text-emerald-400 uppercase tracking-widest bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
-            Real-Time Tracking
-          </span>
-          <h1 className="text-3xl sm:text-4xl font-black text-white mt-3">
-            Track Certified Smartphone Order
-          </h1>
-          <p className="text-xs sm:text-sm text-zinc-400 mt-2">
-            Enter your Order Number (e.g. SW-2026-XXXX) to view live inspection and shipping milestones.
-          </p>
-        </div>
+      {/* Ambient Radial Scrim */}
+      <div className="hero-photo" aria-hidden="true" />
 
-        {/* Search Bar */}
-        <form
-          onSubmit={handleSearch}
-          className="p-4 rounded-3xl bg-zinc-950 border border-zinc-800 shadow-xl flex flex-col sm:flex-row gap-3 mb-10"
-        >
-          <div className="relative flex-1">
-            <Search className="w-4 h-4 text-zinc-500 absolute left-4 top-1/2 -translate-y-1/2" />
-            <input
-              type="text"
-              required
-              placeholder="Order Number (e.g. SW-2026-8912)"
-              value={orderNumber}
-              onChange={(e) => setOrderNumber(e.target.value)}
-              className="w-full pl-11 pr-4 py-3 bg-zinc-900 border border-zinc-800 rounded-2xl text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-emerald-500 transition"
-            />
+      <div className="relative z-10">
+        <Navbar />
+
+        <main className="pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+          <div className="text-center mb-8 flex flex-col items-center">
+            <span className="badge-vesper mb-3">
+              Real-Time Tracking
+            </span>
+            <h1 className="text-3xl sm:text-4xl font-black text-white mt-2">
+              Track Certified <span className="font-serif-italic text-zinc-400">Order</span>
+            </h1>
+            <p className="text-xs sm:text-sm text-zinc-400 mt-2">
+              Enter your Order Number (e.g. SW-2026-XXXX) to view live inspection and shipping milestones.
+            </p>
           </div>
 
-          <div className="sm:w-64">
-            <input
-              type="email"
-              placeholder="Customer Email (Optional)"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 bg-zinc-900 border border-zinc-800 rounded-2xl text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-emerald-500 transition"
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="px-6 py-3 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-xs uppercase tracking-wider transition active:scale-95 disabled:opacity-50 shrink-0"
+          {/* Search Bar */}
+          <form
+            onSubmit={handleSearch}
+            className="p-4 rounded-3xl bg-zinc-950/70 border border-white/10 shadow-xl flex flex-col sm:flex-row gap-3 mb-10 backdrop-blur-md"
           >
-            {loading ? 'Searching...' : 'Track'}
-          </button>
-        </form>
+            <div className="relative flex-1">
+              <Search className="w-4 h-4 text-zinc-500 absolute left-4 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                required
+                placeholder="Order Number (e.g. SW-2026-8912)"
+                value={orderNumber}
+                onChange={(e) => setOrderNumber(e.target.value)}
+                className="w-full pl-11 pr-4 py-3 bg-zinc-900 border border-white/10 rounded-2xl text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-white/40 transition"
+              />
+            </div>
+
+            <div className="sm:w-64">
+              <input
+                type="email"
+                placeholder="Customer Email (Optional)"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-4 py-3 bg-zinc-900 border border-white/10 rounded-2xl text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-white/40 transition"
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn btn-solid px-6 py-3 text-xs font-semibold uppercase tracking-wider shrink-0"
+            >
+              {loading ? 'Searching...' : 'Track'}
+            </button>
+          </form>
 
         {errorMessage && (
           <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-400 text-xs text-center mb-8">
@@ -294,12 +301,13 @@ function TrackOrderInner() {
         )}
       </main>
     </div>
+  </div>
   );
 }
 
 export default function TrackOrderPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-[#09090b]" />}>
+    <Suspense fallback={<div className="min-h-screen bg-black" />}>
       <TrackOrderInner />
     </Suspense>
   );
